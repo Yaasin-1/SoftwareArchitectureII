@@ -18,13 +18,19 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	implementation 'com.fasterxml:classmate:1.5.1'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	runtimeOnly 'org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	implementation 'jakarta.persistence:jakarta.persistence-api:3.1.0'
+	implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
 }
 
 tasks.named('test') {
