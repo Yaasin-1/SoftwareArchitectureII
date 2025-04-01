@@ -4,12 +4,11 @@ import com.example.part1.domain.Patient;
 import com.example.part1.repo.PatientRepo;
 import com.example.part1.domain.ErrorInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -39,4 +38,17 @@ public class PatientRestController {
         }
         return new ResponseEntity<Patient>(patient, HttpStatus.OK);
     }
+
+    /*Create a new patient */
+    @PostMapping("/patients")
+    public ResponseEntity<?> createPatient(@RequestBody Patient patient, UriComponentsBuilder ucBuilder) {
+        if (patientRepo.existsById(patient.getId())){
+            return new ResponseEntity(new ErrorInfo("This patient named " + patient.getName() + " already exists."), HttpStatus.CONFLICT);
+        }
+        patientRepo.save(patient);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/api/patients/{id}").buildAndExpand(patient.getId()).toUri());
+        return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+    }
+
 }
