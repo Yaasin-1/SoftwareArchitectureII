@@ -15,7 +15,7 @@ public class Record {
     private String treatment;
     private String notes;
 
-    @OneToOne(mappedBy = "record")
+    @OneToOne
     private Appointments appointment;
 
     public Record() {}
