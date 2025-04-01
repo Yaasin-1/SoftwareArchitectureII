@@ -18,6 +18,10 @@ public class Record {
     @OneToOne
     private Appointments appointment;
 
+    @ManyToOne
+    @JoinColumn()
+    private Patient patient;
+
     public Record() {}
     public Record(Long id, Timestamp recordDate, String diagnosis, String treatment, String notes) {
         this.id = id;
