@@ -68,7 +68,7 @@ public class DoctorRestController {
     }
 
     /*Delete a specific doctor*/
-    @DeleteMapping("/patients/{id}")
+    @DeleteMapping("/doctors/{id}")
     public ResponseEntity<?> deleteDoctor(@PathVariable("id") Long id) {
         Doctor doctor = doctorRepo.findById(id).orElse(null);
         if (doctor == null) {
