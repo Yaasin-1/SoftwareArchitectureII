@@ -54,5 +54,23 @@ public class Appointments {
     public void setNotes(String notes) {
         this.notes = notes;
     }
+    public Patient getPatient() {
+        return patient;
+    }
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+    public Doctor getDoctor() {
+        return doctor;
+    }
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+    public Record getRecord() {
+        return record;
+    }
+    public void setRecord(Record record) {
+        this.record = record;
+    }
 
 }
