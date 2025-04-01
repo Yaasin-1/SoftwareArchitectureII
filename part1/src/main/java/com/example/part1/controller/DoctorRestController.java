@@ -38,7 +38,7 @@ public class DoctorRestController {
         }
         doctorRepo.save(doctor);
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/api/patients/{id}").buildAndExpand(doctor.getId()).toUri());
+        headers.setLocation(ucBuilder.path("/api/doctors/{id}").buildAndExpand(doctor.getId()).toUri());
         return new ResponseEntity<String>(headers, HttpStatus.CREATED);
     }
 
