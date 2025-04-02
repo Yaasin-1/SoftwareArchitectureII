@@ -8,4 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface DoctorRepo extends JpaRepository<Doctor, Long> {
+    boolean existsByEmail(String email);
 }
