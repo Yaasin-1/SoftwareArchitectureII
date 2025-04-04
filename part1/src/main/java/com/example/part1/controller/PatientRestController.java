@@ -44,8 +44,8 @@ public class PatientRestController {
     /*Create a new patient */
     @PostMapping("/patients")
     public ResponseEntity<?> createPatient(@RequestBody Patient patient, UriComponentsBuilder ucBuilder) {
-        if (patientRepo.existsByEmail(patient.getEmail())){
-            return new ResponseEntity(new ErrorInfo("This patient named " + patient.getName() + " with email "+patient.getEmail() + " already exists."), HttpStatus.CONFLICT);
+        if (patient.getId()!=null && patientRepo.existsById(patient.getId())){
+            return new ResponseEntity(new ErrorInfo("This patient named " + patient.getName() + " with ID "+patient.getId() + " already exists."), HttpStatus.CONFLICT);
         }
         patientRepo.save(patient);
         HttpHeaders headers = new HttpHeaders();

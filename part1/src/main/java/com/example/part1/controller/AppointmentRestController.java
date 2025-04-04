@@ -33,7 +33,7 @@ public class AppointmentRestController {
     /*Create a new appointment*/
     @PostMapping("/appointments")
     public ResponseEntity<?> createAppointment(@RequestBody Appointments appointment, UriComponentsBuilder ucBuilder) {
-        if (appointmentRepo.existsById(appointment.getId())){
+        if (appointment.getId()!=null&& appointmentRepo.existsById(appointment.getId())){
             return new ResponseEntity(new ErrorInfo("The appointment with ID "+appointment.getId() + " already exists."), HttpStatus.CONFLICT);
         }
         appointmentRepo.save(appointment);

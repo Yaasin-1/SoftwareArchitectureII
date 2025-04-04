@@ -23,7 +23,7 @@ public class MedicalRecordRestController {
     /*Create a new record*/
     @PostMapping("/medical-records")
     public ResponseEntity<?> createRecord(@RequestBody Record record, UriComponentsBuilder ucBuilder) {
-        if (recordRepo.existsById(record.getId())){
+        if (record.getId()!=null&& recordRepo.existsById(record.getId())){
             return new ResponseEntity(new ErrorInfo("This record with ID "+record.getId() + " already exists."), HttpStatus.CONFLICT);
         }
         recordRepo.save(record);

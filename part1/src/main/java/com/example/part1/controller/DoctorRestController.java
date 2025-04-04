@@ -33,7 +33,7 @@ public class DoctorRestController {
     /*Create a new doctor */
     @PostMapping("/doctors")
     public ResponseEntity<?> createDoctor(@RequestBody Doctor doctor, UriComponentsBuilder ucBuilder) {
-        if (doctorRepo.existsByEmail(doctor.getEmail())){
+        if (doctor.getId()!=null&& doctorRepo.existsByEmail(doctor.getEmail())){
             return new ResponseEntity(new ErrorInfo("This doctor named " + doctor.getName() + " with email "+doctor.getEmail() + " already exists."), HttpStatus.CONFLICT);
         }
         doctorRepo.save(doctor);
