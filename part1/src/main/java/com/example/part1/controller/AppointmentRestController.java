@@ -70,6 +70,7 @@ public class AppointmentRestController {
         if (currentAppointment == null) {
             return new ResponseEntity(new ErrorInfo("Appointment with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
+        //Validation logic in case a doctor/patient with a non existing ID is put through here
         Doctor currentDoctor = doctorRepo.findById(appointment.getDoctor().getId()).orElse(null);
         if (currentDoctor == null) {
             return new ResponseEntity(new ErrorInfo("Doctor with id " + appointment.getDoctor().getId() + " not found"), HttpStatus.NOT_FOUND);
@@ -87,7 +88,7 @@ public class AppointmentRestController {
         }
 
         Record currentRecord = recordRepo.findById(appointment.getRecord().getId()).orElse(null);
-        if (currentRecord == null) {
+        if (currentRecord == null) {//This just makes an empty record if there isn't an existing record for the patient
             Record newRecord = new Record();
             currentAppointment.setRecord(newRecord);
         }
