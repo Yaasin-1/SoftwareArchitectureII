@@ -14,14 +14,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/doctors")
 public class DoctorRestController {
 
     @Autowired
     DoctorRepo doctorRepo;
 
     /* retrieve all doctors */
-    @GetMapping("/doctors")
+    @GetMapping
     public ResponseEntity<List<Doctor>> getAllDoctors() {
         List<Doctor> doctors = doctorRepo.findAll();
         if (doctors.isEmpty()) {
@@ -31,7 +31,7 @@ public class DoctorRestController {
     }
 
     /*Create a new doctor */
-    @PostMapping("/doctors")
+    @PostMapping
     public ResponseEntity<?> createDoctor(@RequestBody Doctor doctor, UriComponentsBuilder ucBuilder) {
         if (doctor.getId()!=null&& doctorRepo.existsByEmail(doctor.getEmail())){
             return new ResponseEntity(new ErrorInfo("This doctor named " + doctor.getName() + " with email "+doctor.getEmail() + " already exists."), HttpStatus.CONFLICT);
@@ -43,7 +43,7 @@ public class DoctorRestController {
     }
 
     /*Get a specific doctor*/
-    @GetMapping("/doctors/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getDoctorById(@PathVariable("id") Long id) {
         Doctor doctor = doctorRepo.findById(id).orElse(null);
         if (doctor == null) {
@@ -53,7 +53,7 @@ public class DoctorRestController {
     }
 
     /*Update a specific doctor by id*/
-    @PutMapping("/doctors/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateDoctor(@RequestBody Doctor doctor, @PathVariable("id") Long id) {
         Doctor currentDoctor = doctorRepo.findById(id).orElse(null);
         if (currentDoctor == null) {
@@ -68,7 +68,7 @@ public class DoctorRestController {
     }
 
     /*Delete a specific doctor*/
-    @DeleteMapping("/doctors/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDoctor(@PathVariable("id") Long id) {
         Doctor doctor = doctorRepo.findById(id).orElse(null);
         if (doctor == null) {
@@ -79,7 +79,7 @@ public class DoctorRestController {
     }
 
     /*List all appointments for a specific doctor*/
-    @GetMapping("/doctors/{id}/appointments")
+    @GetMapping("/{id}/appointments")
     public ResponseEntity<?> getDoctorAppointments(@PathVariable("id") Long id) {
         Doctor doctor = doctorRepo.findById(id).orElse(null);
         if (doctor == null) {

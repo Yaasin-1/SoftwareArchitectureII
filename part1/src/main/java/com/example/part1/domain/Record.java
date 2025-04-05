@@ -1,5 +1,6 @@
 package com.example.part1.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -16,10 +17,12 @@ public class Record {
     private String notes;
 
     @OneToOne
+    @JsonBackReference("appointment-record")
     private Appointments appointment;
 
     @ManyToOne
     @JoinColumn()
+    @JsonBackReference("patient-record")//Avoids infinite looping when using GET mapping
     private Patient patient;
 
     public Record() {}

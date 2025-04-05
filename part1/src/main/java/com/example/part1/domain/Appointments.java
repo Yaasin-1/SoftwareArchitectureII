@@ -1,5 +1,7 @@
 package com.example.part1.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
@@ -16,13 +18,16 @@ public class Appointments {
 
     @ManyToOne
     @JoinColumn()
+    @JsonBackReference("patient-appointments")//This annotation stops the infinite loop
     private Patient patient;
 
     @ManyToOne
     @JoinColumn()
+    @JsonBackReference("doctor-appointments")
     private Doctor doctor;
 
     @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("appointment-record")
     private Record record;
 
     public Long getId() {

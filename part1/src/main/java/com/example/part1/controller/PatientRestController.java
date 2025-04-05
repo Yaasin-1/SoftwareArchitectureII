@@ -15,14 +15,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/patients")
 public class PatientRestController {
 
     @Autowired
     PatientRepo patientRepo;
 
     /* retrieve all patients */
-    @GetMapping("/patients")
+    @GetMapping
     public ResponseEntity<List<Patient>> listAllPatients() {
         List<Patient> patients = patientRepo.findAll();
         if (patients.isEmpty()) {
@@ -32,7 +32,7 @@ public class PatientRestController {
     }
 
     /* retrieve a specific patient by id */
-    @GetMapping("/patients/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getPatientById(@PathVariable("id") Long id) {
         Patient patient = patientRepo.findById(id).orElse(null);
         if (patient == null) {
@@ -42,7 +42,7 @@ public class PatientRestController {
     }
 
     /*Create a new patient */
-    @PostMapping("/patients")
+    @PostMapping
     public ResponseEntity<?> createPatient(@RequestBody Patient patient, UriComponentsBuilder ucBuilder) {
         if (patient.getId()!=null && patientRepo.existsById(patient.getId())){
             return new ResponseEntity(new ErrorInfo("This patient named " + patient.getName() + " with ID "+patient.getId() + " already exists."), HttpStatus.CONFLICT);
@@ -54,7 +54,7 @@ public class PatientRestController {
     }
 
     /*Update a specific patient*/
-    @PutMapping("/patients/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updatePatient(@RequestBody Patient patient, @PathVariable("id") Long id) {
         Patient currentPatient = patientRepo.findById(id).orElse(null);
         if (currentPatient == null) {
@@ -69,7 +69,7 @@ public class PatientRestController {
     }
 
     /*Delete a specific patient*/
-    @DeleteMapping("/patients/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePatient(@PathVariable("id") Long id) {
         Patient patient = patientRepo.findById(id).orElse(null);
         if (patient == null) {
@@ -80,7 +80,7 @@ public class PatientRestController {
     }
 
     /*List all appointments for a specific patient*/
-    @GetMapping("/patients/{id}/appointments")
+    @GetMapping("/{id}/appointments")
     public ResponseEntity<?> getAppointmentsFromPatient(@PathVariable("id") Long id) {
         Patient patient = patientRepo.findById(id).orElse(null);
         if (patient == null) {
@@ -94,7 +94,7 @@ public class PatientRestController {
     }
 
     /*List all medical records for a specific patient*/
-    @GetMapping("/patients/{id}/medical-records")
+    @GetMapping("/{id}/medical-records")
     public ResponseEntity<?> getMedicalRecords(@PathVariable("id") Long id) {
         Patient patient = patientRepo.findById(id).orElse(null);
         if (patient == null) {

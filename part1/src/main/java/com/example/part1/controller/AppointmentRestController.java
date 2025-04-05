@@ -14,14 +14,14 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/appointments")
 public class AppointmentRestController {
 
     @Autowired
     AppointmentRepo appointmentRepo;
 
     /*Get all appointments*/
-    @GetMapping("/appointments")
+    @GetMapping
     public ResponseEntity<List<Appointments>> listAllAppointments() {
         List<Appointments> appointments = appointmentRepo.findAll();
         if (appointments.isEmpty()) {
@@ -31,7 +31,7 @@ public class AppointmentRestController {
     }
 
     /*Create a new appointment*/
-    @PostMapping("/appointments")
+    @PostMapping
     public ResponseEntity<?> createAppointment(@RequestBody Appointments appointment, UriComponentsBuilder ucBuilder) {
         if (appointment.getId()!=null&& appointmentRepo.existsById(appointment.getId())){
             return new ResponseEntity(new ErrorInfo("The appointment with ID "+appointment.getId() + " already exists."), HttpStatus.CONFLICT);
@@ -43,7 +43,7 @@ public class AppointmentRestController {
     }
 
     /*Get a specific appointment by ID*/
-    @GetMapping("/appointments/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Appointments> getAppointmentById(@PathVariable Long id) {
         Appointments appointment = appointmentRepo.findById(id).orElse(null);
         if (appointment == null) {
@@ -53,7 +53,7 @@ public class AppointmentRestController {
     }
 
     /*Update a specific appointment*/
-    @PutMapping("/appointments/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Appointments> updateAppointment(@PathVariable Long id, @RequestBody Appointments appointment) {
         Appointments currentAppointment = appointmentRepo.findById(id).orElse(null);
         if (currentAppointment == null) {
@@ -70,7 +70,7 @@ public class AppointmentRestController {
     }
 
     /*Delete a specific appointment*/
-    @DeleteMapping("/appointments/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAppointment(@PathVariable Long id) {
         Appointments appointment = appointmentRepo.findById(id).orElse(null);
         if (appointment == null) {
@@ -81,7 +81,7 @@ public class AppointmentRestController {
     }
 
     /*Get the specific medical record for the appointment*/
-    @GetMapping("/appointments/{id}/medical-record")
+    @GetMapping("/{id}/medical-record")
     public ResponseEntity<Record> getMedicalRecordByAppointment(@PathVariable Long id) {
         Appointments appointment = appointmentRepo.findById(id).orElse(null);
         if (appointment == null) {

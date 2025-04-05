@@ -1,6 +1,7 @@
 package com.example.part1.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public class Doctor {
     private String phoneNumber;
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    //The annotation below prevents the GetMapping controller from returning an infinite looping JSON
+    @JsonManagedReference("doctor-appointments")//Specific ID's in place because I use more than one instance of this annotaion
     private List<Appointments> appointments;
 
     public Doctor() {}

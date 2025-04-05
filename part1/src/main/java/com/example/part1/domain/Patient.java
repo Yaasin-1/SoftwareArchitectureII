@@ -1,5 +1,6 @@
 package com.example.part1.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,9 +18,14 @@ public class Patient {
     private String address;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    //The models are set up so that patients has list appointments and appointment has attribute patient
+    //When testing in postman, the GetMapping returns an infinite looping JSON
+    //This @JsonManagedReference makes it so that it doesn't loop
+    @JsonManagedReference("patient-appointments")
     private List<Appointments> appointments;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("patient-record")
     private List<Record> records;
 
     public Patient() {}

@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/medical-records")
 public class MedicalRecordRestController {
 
     @Autowired
     RecordRepo recordRepo;
 
     /*Create a new record*/
-    @PostMapping("/medical-records")
+    @PostMapping
     public ResponseEntity<?> createRecord(@RequestBody Record record, UriComponentsBuilder ucBuilder) {
         if (record.getId()!=null&& recordRepo.existsById(record.getId())){
             return new ResponseEntity(new ErrorInfo("This record with ID "+record.getId() + " already exists."), HttpStatus.CONFLICT);
