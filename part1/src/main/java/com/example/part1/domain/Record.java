@@ -20,11 +20,6 @@ public class Record {
     @JsonBackReference("appointment-record")
     private Appointments appointment;
 
-    @ManyToOne
-    @JoinColumn()
-    @JsonBackReference("patient-record")//Avoids infinite looping when using GET mapping
-    private Patient patient;
-
     public Record() {}
     public Record(Long id, Timestamp recordDate, String diagnosis, String treatment, String notes) {
         this.id = id;

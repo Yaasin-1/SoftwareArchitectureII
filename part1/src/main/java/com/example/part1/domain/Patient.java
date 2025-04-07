@@ -24,10 +24,6 @@ public class Patient {
     @JsonManagedReference("patient-appointments")
     private List<Appointments> appointments;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference("patient-record")
-    private List<Record> records;
-
     public Patient() {}
 
     public Patient(String name, String email, String phoneNumber, String address) {
@@ -83,11 +79,5 @@ public class Patient {
 
     public void setAppointments(List<Appointments> appointments) {
         this.appointments = appointments;
-    }
-    public List<Record> getRecords() {
-        return records;
-    }
-    public void setRecords(List<Record> records) {
-        this.records = records;
     }
 }

@@ -100,7 +100,8 @@ public class PatientRestController {
         if (patient == null) {
             return new ResponseEntity(new ErrorInfo("Patient with id " + id + " not found"), HttpStatus.NOT_FOUND);
         }
-        List<Record> records = patient.getRecords();
+        //This fetches the records from the appointments of the patient
+        List<Record> records = patient.getAppointments().stream().map(Appointments::getRecord).toList();
         if (records.isEmpty()) {
             return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
